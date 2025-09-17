@@ -34,7 +34,7 @@ osbuild clean ./os-compose.yml
 osbuild --help
 ```
 
-## Builder Configuration
+## Configuration File
 
 To help the builder determine the proper build procedure and resources, the user of the builder must include a YAML file in their project.
 
@@ -42,7 +42,10 @@ To help the builder determine the proper build procedure and resources, the user
 
 The following properties are required in the YAML file.:
 - `name`: Name of the operating system
-- `bootloader`: Options are "limine", "grub", or "custom"
+- `bootloader`: Options are "limine", "grub", or "none"
+    - Note: If you choose "none", you may still provide another bootloader through custom phase commands; recommended after the Build phase, or before the Pack phase.
+- `vm`: Options are "qemu", "kvm", "virtualbox", or "none"
+    - Note: If you choose "none", you may still provide another virtual machine thourhg custom phase commands; recommended before the Boot phase.
 
 ### Example Configuration
 
@@ -55,26 +58,26 @@ bootloader: limine
 emulator: qemu
 build:
   prepare:
-    scripts:
+    commands:
       - command: ./scripts/before-prepare.sh
         when: before
       - command: ./scripts/after-prepare.sh
         when: after
   build:
-    scripts:
+    commands:
       - command: ./scripts/before-build.sh
         when: before
       - command: ./scripts/after-build.sh
         when: after
   pack:
     prevent-defaults: true
-    scripts:
+    commands:
       - command: ./scripts/before-pack.sh
         when: before
       - command: ./scripts/after-pack.sh
         when: after
   boot:
-    scripts:
+    commands:
       - command: ./scripts/before-boot-first.sh
         priority: 1
         when: before
@@ -93,10 +96,6 @@ Each build follows a series of phases to completion.
 
 Perform any actions which are required before the source code build operation.
 
-#### Default Behavior
-
-
-
 ### Phase 2: Build
 
 Perform the source code build (compile) operation.
@@ -110,3 +109,29 @@ Perform the packing procedure for compiled source code and related OS assets int
 ### Phase 4: Boot (optional)
 
 Launch the operating system in a virtual machine.
+
+## Feature Progress
+
+- ❌ = Not Started
+- ⏳ = In Progress
+- ✅ = Done
+
+### Features
+- ❌ Command Line Interface (CLI)
+- ❌ Configuration File Parsing
+- ❌ Phased Build Procedure
+- ❌ Build Automation Tools
+    - ❌ Cargo (Rust-only)
+    - ❌ Make (C, C++, Rust)
+- ❌ Bootloaders
+    - ❌ Limine
+    - ❌ Grub
+- ❌ Virtual Machines
+    - ❌ QEMU
+    - ❌ KVM
+    - ❌ VirtualBox
+- ❌ CPU Architectures
+    - ❌ x86
+    - ❌ x64
+    - ❌ arm32
+    - ❌ arm64
