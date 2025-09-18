@@ -53,9 +53,10 @@ The following properties are required in the YAML file.:
 # Required properties
 name: Grovean
 bootloader: limine
+vm: qemu
 
 # Optional properties
-emulator: qemu
+
 build:
   prepare:
     commands:
