@@ -50,45 +50,65 @@ The following properties are required in the YAML file.:
 ### Example Configuration
 
 ```
-# Required properties
+---
+# Required fields
 name: Grovean
 bootloader: limine
 vm: qemu
 
-# Optional properties
-
+# Optional fields
 build:
   prepare:
     prevent-defaults:
       - parse-runner-arguments
     commands:
       - command: ./scripts/before-prepare.sh
-        when: before
+        triggers:
+          - at: phase
+            when: before
       - command: ./scripts/after-prepare.sh
-        when: after
+        triggers:
+          - at: parse-configuration-file
+            when: after
   compile:
     commands:
       - command: ./scripts/before-build.sh
-        when: before
+        triggers:
+          - at: phase
+            when: before
       - command: ./scripts/after-build.sh
-        when: after
+        triggers:
+          - at: phase
+            when: after
   pack:
-    prevent-defaults: all
+    prevent-defaults:
+      - all
     commands:
       - command: ./scripts/before-pack.sh
-        when: before
+        triggers:
+          - at: phase
+            when: before
       - command: ./scripts/after-pack.sh
-        when: after
+        triggers:
+          - at: phase
+            when: after
   boot:
     commands:
       - command: ./scripts/before-boot-first.sh
         priority: 1
-        when: before
+        triggers:
+          - at: phase
+            when: before
       - command: ./scripts/before-boot-second.sh
         priority: 0
-        when: before
+        triggers:
+          - at: phase
+            when: before
       - command: ./scripts/after-shutdown.sh
-        when: after
+        triggers:
+          - at: phase
+            when: after
+
 ```
 
 ## Builder Design
