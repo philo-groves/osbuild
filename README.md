@@ -64,21 +64,21 @@ build:
     commands:
       - command: ./scripts/before-prepare.sh
         triggers:
-          - at: phase
+          - what: phase
             when: before
       - command: ./scripts/after-prepare.sh
         triggers:
-          - at: parse-configuration-file
+          - what: parse-configuration-file
             when: after
   compile:
     commands:
       - command: ./scripts/before-build.sh
         triggers:
-          - at: phase
+          - what: phase
             when: before
       - command: ./scripts/after-build.sh
         triggers:
-          - at: phase
+          - what: phase
             when: after
   pack:
     prevent-defaults:
@@ -86,27 +86,27 @@ build:
     commands:
       - command: ./scripts/before-pack.sh
         triggers:
-          - at: phase
+          - what: phase
             when: before
       - command: ./scripts/after-pack.sh
         triggers:
-          - at: phase
+          - what: phase
             when: after
   boot:
     commands:
       - command: ./scripts/before-boot-first.sh
         priority: 1
         triggers:
-          - at: phase
+          - what: phase
             when: before
       - command: ./scripts/before-boot-second.sh
         priority: 0
         triggers:
-          - at: phase
+          - what: phase
             when: before
       - command: ./scripts/after-shutdown.sh
         triggers:
-          - at: phase
+          - what: phase
             when: after
 
 ```
