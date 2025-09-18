@@ -119,7 +119,7 @@ Launch the operating system in a virtual machine.
 ### Features
 - ❌ Command Line Interface (CLI)
 - ❌ Configuration File Parsing
-- ❌ Phased Build Procedure
+- ⏳ Phased Build Procedure
 - ❌ Build Automation Tools
     - ❌ Cargo (Rust-only)
     - ❌ Make (C, C++, Rust)
