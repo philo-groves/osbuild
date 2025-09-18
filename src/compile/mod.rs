@@ -3,13 +3,13 @@ use anyhow::Result;
 use stopwatch::Stopwatch;
 use crate::Phase;
 
-pub struct PackPhase {
+pub struct CompilePhase {
     stopwatch: RwLock<Stopwatch>
 }
 
-impl Phase for PackPhase {
+impl Phase for CompilePhase {
     fn new() -> Self {
-        PackPhase {
+        CompilePhase {
             stopwatch: RwLock::new(Stopwatch::new())
         }
     }
@@ -19,7 +19,7 @@ impl Phase for PackPhase {
         duration.start();
         drop(duration);
 
-        println!("The pack phase is not yet implemented");
+        println!("The compile phase is not yet implemented");
 
         let mut duration = self.stopwatch.write().unwrap();
         duration.stop();
