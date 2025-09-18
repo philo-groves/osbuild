@@ -19,7 +19,7 @@ impl Phase for PackPhase {
         duration.start();
         drop(duration);
 
-        println!("{} phase is not yet implemented", self.short_name());
+        println!("{} phase is not yet implemented", self.name());
 
         let mut duration = self.stopwatch.write().unwrap();
         duration.stop();

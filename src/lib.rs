@@ -17,9 +17,9 @@ pub fn process_runner(args: RunnerArgs) -> Result<i32> {
 
 fn process() -> Result<i32> {
     for phase in phases() {
-        println!("Starting {} phase", phase.short_name());
+        println!("Starting {} phase", phase.name());
         phase.run()?;
-        println!("Completed {} phase in {:?}ms", phase.short_name(), phase.duration().as_millis());
+        println!("Completed {} phase in {:?}ms", phase.name(), phase.duration().as_millis());
     }
     
     Ok(0)
@@ -39,12 +39,8 @@ pub trait Phase {
     fn run(&self) -> Result<i32>;
     fn duration(&self) -> Duration;
 
-    fn name(&self) -> &str {
+    fn name(&self) -> String {
         std::any::type_name::<Self>()
-    }
-
-    fn short_name(&self) -> String {
-        self.name()
             .split("::")
             .last()
             .unwrap_or_default()
