@@ -1,5 +1,5 @@
 use anyhow::Result;
-use osbuild::prepare::args::BuildArgs;
+use osbuild::prepare::args::RunnerArgs;
 
 // Main entry point for command line interface (CLI).
 fn main() {
@@ -9,6 +9,6 @@ fn main() {
 }
 
 /// This runner is executed when `cargo build` is used with Rust-based projects.
-pub(crate) fn runner(args: BuildArgs) -> Result<i32> {
+pub(crate) fn runner(args: RunnerArgs) -> Result<i32> {
     osbuild::process_runner(args)
 }

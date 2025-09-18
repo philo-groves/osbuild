@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
 #[derive(Debug, Clone)]
-pub struct BuildArgs {
+pub struct RunnerArgs {
     pub executable: PathBuf
 }

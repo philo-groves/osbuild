@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 use anyhow::Result;
-use crate::{compile::CompilePhase, pack::PackPhase, prepare::{args::BuildArgs, PreparePhase}, run::RunPhase};
+use crate::{compile::CompilePhase, pack::PackPhase, prepare::{args::RunnerArgs, PreparePhase}, run::RunPhase};
 
 pub mod prepare;
 pub mod compile;
@@ -12,7 +12,7 @@ pub fn process_command() -> Result<i32> {
     process()
 }
 
-pub fn process_runner(args: BuildArgs) -> Result<i32> {
+pub fn process_runner(args: RunnerArgs) -> Result<i32> {
     process()
 }
 
