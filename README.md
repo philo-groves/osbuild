@@ -59,6 +59,8 @@ vm: qemu
 
 build:
   prepare:
+    prevent-defaults:
+      - parse-runner-arguments
     commands:
       - command: ./scripts/before-prepare.sh
         when: before
@@ -71,7 +73,7 @@ build:
       - command: ./scripts/after-build.sh
         when: after
   pack:
-    prevent-defaults: true
+    prevent-defaults: all
     commands:
       - command: ./scripts/before-pack.sh
         when: before
@@ -91,11 +93,16 @@ build:
 
 ## Builder Design
 
-Each build follows a series of phases to completion. 
+Each build follows a series of phases to completion. Every phase contains a series of default behaviors; any of these behaviors may be disabled individually in the project configuration file.
 
 ### Phase 1: Prepare
 
 Perform any actions which are required before the source code build operation.
+
+### Default Behavior
+
+1. `parse-configuration-file`: Validate and read the configuration file that is supplied to the builder.
+2. `parse-runner-arguments`: Validate and read the arguments which are provided by Cargo-based runners.
 
 ### Phase 2: Compile
 
