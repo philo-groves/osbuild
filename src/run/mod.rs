@@ -19,7 +19,7 @@ impl Phase for RunPhase {
         duration.start();
         drop(duration);
 
-        println!("The run phase is not yet implemented");
+        println!("{} phase is not yet implemented", self.short_name());
 
         let mut duration = self.stopwatch.write().unwrap();
         duration.stop();

@@ -21,8 +21,8 @@ impl Phase for PreparePhase {
         duration.start();
         drop(duration);
 
-        println!("The prepare phase is not yet implemented");
-
+        println!("{} phase is not yet implemented", self.short_name());
+        
         let mut duration = self.stopwatch.write().unwrap();
         duration.stop();
 
