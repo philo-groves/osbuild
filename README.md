@@ -61,50 +61,51 @@ build:
   prepare:
     prevent-defaults:
       - parse-runner-arguments
-    commands:
-      - command: ./scripts/before-prepare.sh
+    actions:
+      - commands: /scripts/before-prepare.sh
         triggers:
           - what: phase
             when: before
-      - command: ./scripts/after-prepare.sh
+      - commands: /scripts/after-prepare.sh
         triggers:
           - what: parse-configuration-file
             when: after
   compile:
-    commands:
-      - command: ./scripts/before-build.sh
+    actions:
+      - commands: /scripts/before-build.sh
         triggers:
           - what: phase
             when: before
-      - command: ./scripts/after-build.sh
+      - commands: /scripts/after-build.sh
         triggers:
           - what: phase
             when: after
   pack:
-    prevent-defaults:
-      - all
-    commands:
-      - command: ./scripts/before-pack.sh
+    prevent-defaults: all
+    actions:
+      - commands:
+          - /scripts/before-pack-1.sh
+          - /scripts/before-pack-2.sh
         triggers:
           - what: phase
             when: before
-      - command: ./scripts/after-pack.sh
+      - commands: /scripts/after-pack.sh
         triggers:
           - what: phase
             when: after
   boot:
-    commands:
-      - command: ./scripts/before-boot-first.sh
+    actions:
+      - commands: /scripts/before-boot-first.sh
         priority: 1
         triggers:
           - what: phase
             when: before
-      - command: ./scripts/before-boot-second.sh
+      - commands: /scripts/before-boot-second.sh
         priority: 0
         triggers:
           - what: phase
             when: before
-      - command: ./scripts/after-shutdown.sh
+      - commands: /scripts/after-shutdown.sh
         triggers:
           - what: phase
             when: after
@@ -119,7 +120,7 @@ Each build follows a series of phases to completion. Every phase contains a seri
 
 Perform any actions which are required before the source code build operation.
 
-### Default Behavior
+#### Default Behavior
 
 1. `parse-configuration-file`: Validate and read the configuration file that is supplied to the builder.
 2. `parse-runner-arguments`: Validate and read the arguments which are provided by Cargo-based runners.
@@ -128,15 +129,27 @@ Perform any actions which are required before the source code build operation.
 
 Perform the source code build (compile) operation.
 
-If a Makefile is detected within the project, Make will be executed. If a Rust project without a Makefile is detected, Cargo will be executed.
+#### Default Behavior
+
+1. `compile-source-code`: Build and compile the source code for the project. By default, the build procedure supports autodetection for Cargo and Make projects. 
 
 ### Phase 3: Pack
 
-Perform the packing procedure for compiled source code and related OS assets into an executable format (e.g. ISO).
+Perform the packing procedure for compiled source code and related OS assets into a bootable image format.
+
+#### Default Behavior
+
+1. `attach-bootloader`: Attach the configured bootloader to the operating system resources.
+2. `attach-filesystem`: Optionally executes if enabled and configured. Attach one or more directories as a filesystem.
+3. `create-bootable-image`: Create a bootable image from the compiled source code, bootloader, and other resources (e.g. static files). By default, the image is generated in ISO format.
 
 ### Phase 4: Run (optional)
 
 Launch the operating system in a virtual machine.
+
+#### Default Behavior
+
+1. `run-virtual-machine`: Run the bootable image in the configured virtual machine. By default, all supported virtual machines run within Docker containers, and will not need to be installed on your system.
 
 ## Feature Progress
 
