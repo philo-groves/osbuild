@@ -63,7 +63,7 @@ build:
         when: before
       - command: ./scripts/after-prepare.sh
         when: after
-  build:
+  compile:
     commands:
       - command: ./scripts/before-build.sh
         when: before
@@ -96,7 +96,7 @@ Each build follows a series of phases to completion.
 
 Perform any actions which are required before the source code build operation.
 
-### Phase 2: Build
+### Phase 2: Compile
 
 Perform the source code build (compile) operation.
 
@@ -106,7 +106,7 @@ If a Makefile is detected within the project, Make will be executed. If a Rust p
 
 Perform the packing procedure for compiled source code and related OS assets into an executable format (e.g. ISO).
 
-### Phase 4: Boot (optional)
+### Phase 4: Run (optional)
 
 Launch the operating system in a virtual machine.
 
